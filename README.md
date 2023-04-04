@@ -5,3 +5,4 @@
 ...
 Julian Ogata
 Angel Armendariz
+Lori Cha
