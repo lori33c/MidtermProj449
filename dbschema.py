@@ -6,7 +6,8 @@ conn = pymysql.connect(
     user='root',
     password= "Password123!",
     db='449_db',
-    cursorclass=pymysql.cursors.DictCursor
+    cursorclass=pymysql.cursors.DictCursor,
+    port=3306
 )
 
 cur = conn.cursor()
