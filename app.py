@@ -34,7 +34,6 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/upload', methods=['POST', 'GET'])
-@jwt_required()
 def upload_file():
 	if request.method == 'POST':
 		if 'file' not in request.files:
