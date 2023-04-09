@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Public Items</title>
+</head>
+<body>
+    <h1>Public Items</h1>
+    <ul>
+        {% for item in public_data %}
+            <li>
+                <strong>{{ item.name }}</strong><br>
+                {{ item.description }}
+            </li>
+        {% endfor %}
+    </ul>
+    <form action="/" method="GET"><button>Back Home</button></form>
+</body>
+</html>

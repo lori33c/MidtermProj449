@@ -58,7 +58,7 @@ def public():
         {"id": 2, "name": "Item 2", "description": "This is a public item 2."},
         {"id": 3, "name": "Item 3", "description": "This is a public item 3."},
     ]
-    return jsonify(public_data)
+    return render_template('public.html', public_data=public_data)
 
 cur = conn.cursor()
 
