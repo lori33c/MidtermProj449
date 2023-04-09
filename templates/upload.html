@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Upload File</title>
+</head>
+<body>
+	<h1>Upload File</h1>
+	<form action="/upload" method="POST" enctype="multipart/form-data">
+		<input type="file" name="file" id="file" required>
+		<input type="hidden" name="access_token" id="access_token" value="">
+		<button onclick="goToUploadEndpoint" type="submit">Upload</button>
+	</form>
+    <form action="/" method="GET"><button>Back Home</button></form>
+</body>
+<script>
+    function goToUploadEndpoint(token) {
+        const headers = new Headers();
+        headers.append('Authorization', 'Bearer ' + token);
+
+        fetch('/upload', {
+            method: 'GET',
+            headers: headers
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Error: ' + response.status);
+            }
+        })
+        .then(data => {
+            document.body.innerHTML = data;
+            document.getElementById('access_token').value = token; // Insert access token value into the hidden input field
+        })
+        .catch(error => {
+            console.error('Error fetching upload endpoint:', error);
+        });
+    }
+
+</script>
+</html>

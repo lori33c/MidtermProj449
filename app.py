@@ -33,20 +33,24 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['POST', 'GET'])
 @jwt_required()
 def upload_file():
-    if 'file' not in request.files:
-        return jsonify({"msg": "No file part"}), 400
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({"msg": "No file selected"}), 400
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return jsonify({"msg": "File uploaded successfully"}), 200
-    else:
-        return jsonify({"msg": "File type not allowed"}), 400
+	if request.method == 'POST':
+		if 'file' not in request.files:
+			return jsonify({"msg": "No file part"}), 400
+		file = request.files['file']
+		if file.filename == '':
+			return jsonify({"msg": "No file selected"}), 400
+		if file and allowed_file(file.filename):
+			filename = secure_filename(file.filename)
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			return jsonify({"msg": "File uploaded successfully"}), 200
+		else:
+			return jsonify({"msg": "File type not allowed"}), 400
+	elif request.method == 'GET':
+		return render_template('upload.html')
+
 
 @app.route('/public', methods=['GET'])
 def public():
@@ -84,6 +88,7 @@ def login():
 			<p>Your access token is: {access_token}</p>
 			<button onclick="goToProtectedEndpoint('{access_token}')">Go to protected endpoint</button>
 			<button onclick="window.location.href='/'">Home</button>
+			<button onclick="goToUploadEndpoint('{access_token}')">Upload Stuff</button>
 			<script>
 				function goToProtectedEndpoint(token) {{
 					const headers = new Headers();
@@ -107,6 +112,31 @@ def login():
 						console.error('Error fetching protected endpoint:', error);
 					}});
 				}}
+
+				function goToUploadEndpoint(token) {{
+					const headers = new Headers();
+					headers.append('Authorization', 'Bearer ' + token);
+
+					fetch('/upload', {{
+						method: 'GET',
+						headers: headers
+					}})
+					.then(response => {{
+						if (response.ok) {{
+							return response.text();
+						}} else {{
+							throw new Error('Error: ' + response.status);
+						}}
+					}})
+					.then(data => {{
+						document.body.innerHTML = data;
+						document.getElementById('access_token').value = token; // Insert access token value into the hidden input field
+					}})
+					.catch(error => {{
+						console.error('Error fetching upload endpoint:', error);
+					}});
+				}}
+
 			</script>
 			"""
 			return response_html, 200, {'access_token': access_token}
