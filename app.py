@@ -75,5 +75,28 @@ def register():
 		msg = 'Please fill out the form !'
 	return render_template('register.html', msg = msg)
 
+@app.route('/about')
+def about():
+    msg = ''
+    return render_template('about.html', msg = msg)
+
+@app.errorhandler(400)
+def cannotprocess(e):
+    return render_template('error.html', error = 400)
+
+@app.errorhandler(401)
+def DNSissue(e):
+    return render_template('error.html', error = 401)
+
+@app.errorhandler(404)
+def notfound(e):
+    return render_template('error.html', error = 404)
+
+@app.errorhandler(500)
+def unexpectederror(e):
+    return render_template('error.html', error = 500)
+
+
+
 if __name__ == "__main__":
 	app.run(host ="localhost", port = int("5000"))
