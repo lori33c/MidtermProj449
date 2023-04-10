@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Public Items</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
     <h1>Public Items</h1>
     <ul>
         {% for item in public_data %}
@@ -14,5 +11,4 @@
         {% endfor %}
     </ul>
     <form action="/" method="GET"><button>Back Home</button></form>
-</body>
-</html>
+{% endblock %}
