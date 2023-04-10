@@ -24,7 +24,7 @@ app.config['MAX_CONTENT_LENGTH'] = MAX_FILE_SIZE
 conn = pymysql.connect(
     host='localhost',
     user='root',
-    password= "",
+    password= "Password123!",
     db='449_db',
     cursorclass=pymysql.cursors.DictCursor
 )
