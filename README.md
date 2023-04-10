@@ -30,6 +30,10 @@ venv\Scripts\activate.bat
 Install the required Python packages:
 pip install -r requirements.txt
 
+Set up the required database:
+Create a database and schema in MySQL workbench with host='localhost' and user='root' with no password and the name '449_db'
+Run the python file dbschema.py
+
 Running the Application
 Start the Flask application:
 flask run 
