@@ -14,7 +14,7 @@ app.secret_key = 'happykey'
 app.config['JWT_SECRET_KEY'] = 'secretMidtermKey'
 jwt = JWTManager(app)
 
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = 'templates/uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 MAX_FILE_SIZE = 16 * 1024 * 1024  # 16MB
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
