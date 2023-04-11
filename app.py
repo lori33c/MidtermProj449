@@ -190,6 +190,10 @@ def register():
 def about():
     msg = ''
     return render_template('about.html', msg = msg)
+    
+@app.route('/notfound')
+def notfoundweb():
+    return render_template('error.html', error = 404)
 
 @app.errorhandler(400)
 def cannotprocess(e):
